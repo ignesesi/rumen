@@ -18,4 +18,12 @@ public class Issue extends BoardItem {
         return description;
     }
 
+    @Override
+    public String viewInfo() {
+         // get the common info
+         String baseInfo = super.viewInfo();
+
+         // add additional info, based on which subclass you are in
+         return String.format("Issue: %s, Description: %s", baseInfo, this.getDescription());
+    }
 }

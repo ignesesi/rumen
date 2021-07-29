@@ -114,5 +114,14 @@ public class BoardItem {
             System.out.println(log.viewInfo());
         }
     }
+    
+    public String getHistory() {
+        StringBuilder builder = new StringBuilder();
 
+        for (EventLog event : history) {
+          builder.append(event.viewInfo()).append(System.lineSeparator());
+        }
+
+        return builder.toString();
+    }
 }

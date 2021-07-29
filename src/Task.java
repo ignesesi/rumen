@@ -25,6 +25,13 @@ public class Task extends BoardItem {
         history.add(new EventLog(String.format("Assignee changed from %s to %s", this.assignee, assignee)));
         this.assignee = assignee;
     }
+    
+    @Override
+    public String viewInfo() {
+         // get the common info
+         String baseInfo = super.viewInfo();
 
-
+         // add additional info, based on which subclass you are in
+         return String.format("Task: %s, Assignee: %s", baseInfo, this.getAssignee());
+    }
 }
