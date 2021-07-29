@@ -26,4 +26,24 @@ public class Issue extends BoardItem {
          // add additional info, based on which subclass you are in
          return String.format("Issue: %s, Description: %s", baseInfo, this.getDescription());
     }
+
+    @Override
+    public void advanceStatus() {
+        if(status == Status.Verified) {
+            history.add(new EventLog("Can't advance, already at Verified"));
+            return;
+        }
+        status = Status.Verified;
+        history.add(new EventLog("Status changed to Verified"));
+    }
+
+    @Override
+    public void revertStatus() {
+        if(status == Status.Verified) {
+            status = Status.Open;
+            history.add(new EventLog("Status changed from Verified to Open"));
+            return;
+        }
+        history.add(new EventLog("Can't revert, already at Open"));
+    }
 }

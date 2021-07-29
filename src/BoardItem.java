@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardItem {
+public abstract class BoardItem {
     private String title;
     private LocalDate dueDate;
     private Status status;
@@ -57,53 +57,9 @@ public class BoardItem {
         return status;
     }
 
-    public void revertStatus() {
-        switch(status) {
-            case Open :
-                history.add(new EventLog("Can't revert, already at Open"));
-                break;
-            case ToDo :
-                status = Status.Open;
-                history.add(new EventLog("Status changed from To Do to Open"));
-                break;
-            case InProgress :
-                status = Status.ToDo;
-                history.add(new EventLog("Status changed from In Progress to To Do"));
-                break;
-            case Done :
-                status = Status.InProgress;
-                history.add(new EventLog("Status changed from Done to In Progress"));
-                break;
-            case Verified :
-                status = Status.Done;
-                history.add(new EventLog("Status changed from Verified to Done"));
-                break;
-        }
-    }
+    public abstract void revertStatus();
 
-    public void advanceStatus() {
-        switch(status) {
-            case Open :
-                status = Status.ToDo;
-                history.add(new EventLog("Status changed from Open to To Do"));
-                break;
-            case ToDo :
-                status = Status.InProgress;
-                history.add(new EventLog("Status changed from To Do to In Progress"));
-                break;
-            case InProgress :
-                status = Status.Done;
-                history.add(new EventLog("Status changed from In Progress to Done"));
-                break;
-            case Done :
-                status = Status.Verified;
-                history.add(new EventLog("Status changed from Done to Verified"));
-                break;
-            case Verified :
-                history.add(new EventLog("Can't advance, already at Verified"));
-                break;
-        }
-    }
+    public abstract void advanceStatus();
 
     public String viewInfo() {
         return String.format("'%s', [%s | %s]", title, status, dueDate);
@@ -114,7 +70,7 @@ public class BoardItem {
             System.out.println(log.viewInfo());
         }
     }
-    
+
     public String getHistory() {
         StringBuilder builder = new StringBuilder();
 
